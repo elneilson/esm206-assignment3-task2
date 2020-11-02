@@ -238,8 +238,14 @@ Starting from the `lakers` dataset, create a new dataset called `gasol_hookshots
 
 ```{r}
 # Your code here: 
+gasol_hookshots <- lakers %>%
+  filter(player == "Pau Gasol", type == "hook") %>%
+  mutate(date_new = ymd(date)) %>%
+  mutate(month_new = month(date_new))
 
-
+hookshots_month <- gasol_hookshots %>% 
+  group_by(type, month_new) %>%
+  count(month_new)
 ```
 
 ### 4. `dplyr::case_when()`
@@ -288,8 +294,10 @@ Note: If you add another condition within `case_when()` that is `TRUE ~ "some th
 
 ```{r}
 # Your code here: 
-
-
+storms_danger <- storms %>%
+  mutate(danger = case_when(
+    status == "hurricane" ~ "high",
+    status != "hurricane" ~ "moderate"))
 ```
 
 ## 5. Practice version control w/git
